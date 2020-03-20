@@ -1,0 +1,86 @@
+<template>
+	<div id="searchRes" class="slds-form-element slds-lookup" data-select="single">
+		<div class="slds-form-element__control">
+			<div>
+				<template if:true={isRecordSelected}>
+					<template if:true={hasLabel}>
+						<label class="slds-form-element__label slds-grid">
+							<template if:true={isRequired}><abbr class="slds-required" title="required">* </abbr></template>{label}
+						</label>
+					</template>
+					<div id="lookupPill" class="slds-pill-container ">
+						<div class="pillSize pill slds-pill_link">
+							<div class="slds-pill__icon_container">
+								<slot>
+									<lightning-icon icon-name={icon} size="x-small" variant="circle" alternative-text="icon">
+									</lightning-icon>
+								</slot>
+							</div>
+							<div class="slds-pill__action pill-action-spacing">
+								<div class="whiteSpace">
+									{selectedRecord.Name}
+								</div>
+							</div>
+							<template if:false={disableRemove}>
+								<lightning-button-icon class="slds-pill__remove" icon-name="utility:close"  variant="bare" alternative-text="Close" onclick={clear}></lightning-button-icon>
+							</template>
+						</div>
+					</div>
+				</template>
+
+				<template if:false={isRecordSelected}>
+					<div id="lookupField">
+						<template if:true={hasLabel}>
+							<lightning-input type="search" onchange={handleSearchChange} onfocus={handleFocus} onblur={handleBlur}
+								class={inputClass} value={searchKeyword} placeholder="Search" onkeypress={keyCheck} label={label}
+								field-level-help={fieldLevelHelp} required={isRequired}>
+							</lightning-input>
+						</template>
+						<template if:false={hasLabel}>
+							<template if:true={isRequired}><abbr class="slds-required" title="required">* </abbr></template>
+							<lightning-input type="search" onchange={handleSearchChange} onfocus={handleFocus} onblur={handleBlur}
+								class={inputClass} value={searchKeyword} placeholder="Search" onkeypress={keyCheck} variant="label-hidden"
+								field-level-help={fieldLevelHelp} required={isRequired}>
+							</lightning-input>
+						</template>
+					</div>
+				</template>
+
+			</div>
+		</div>
+		
+		<template if:true={isResultsContainerVisible}>
+			<ul class="resultContainer">
+
+				<template if:true={isSearchKeywordLongEnough}>
+					<li role="presentation" class="slds-listbox__item" onclick={handleSearchKeywordSubmit}>
+						<span class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-p-vertical_small slds-p-left_x-small option" role="option">
+							<span class="slds-media__figure">
+								<span class="slds-icon_container" title="Icon">
+									<lightning-icon class="slds-input__icon" icon-name="utility:search" size="x-small" alternative-text="search"></lightning-icon>
+								</span>
+							</span>
+							<span class="slds-media__body">
+								<span class="slds-listbox__option-text slds-listbox__option-text_entity">
+									{searchKeyword}
+								</span>
+							</span>
+						</span>
+					</li>
+				</template>
+
+				<template if:true={listOfSearchRecords.data}>
+					<template for:each={listOfSearchRecords.data} for:item="record">
+						<c-custom-lookup-result key={record.id} record={record} icon={icon} onrecordselect={handleRecordSelection}>
+						</c-custom-lookup-result>
+					</template>
+				</template>
+
+			</ul>
+		</template>
+
+		<template if:true={hasError}>
+			<div data-help-message="true" role="alert" class="slds-has-error slds-form-element__help error-text">{errorText}</div>
+		</template>
+	</div>
+</template>

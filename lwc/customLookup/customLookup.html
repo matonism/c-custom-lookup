@@ -1,0 +1,43 @@
+<template>
+	<div id="searchRes" class="slds-form-element slds-lookup" data-select="single" onsearchkeywordsubmit={handleSearchKeywordSubmission} onlookupmodalclose={handleLookupModalClose}>
+		
+		<c-custom-lookup-input 
+			object-name={objectName} 
+			label={fieldLabel} 
+			object-label={objectLabel} 
+			columns-to-show={columns} 
+			icon={icon}
+			field-level-help={fieldLevelHelp}
+			selected-record={selectedRecord}
+			oncustomlookupselect={handleRecordSelection}
+			search-keyword={searchKeyword}
+			is-required={isRequired}
+			limit-attribute={limitAttribute}
+			clear-cache={clearCache}>
+		</c-custom-lookup-input>
+		
+		<c-popup-modal size="large" header={fieldLabel}>
+			<c-custom-lookup-modal-content 
+				object-name={objectName}
+				object-label={objectLabel}
+				columns-to-show={columns}
+				search-keyword={searchKeyword}
+				icon={icon}
+				oncustomlookupselect={handleRecordSelection}
+				page-size={pageSize}
+				limit-attribute={limitAttribute}
+				clear-cache={clearCache}>
+			</c-custom-lookup-modal-content >
+
+			<div slot="footer">
+				<div class="right-aligned">
+					<button title="Cancel" class="slds-button slds-button_neutral cancel-button-color" onclick={handleLookupModalClose}>Cancel</button>
+				</div>
+			</div>
+		</c-popup-modal>
+		
+		<template if:true={hasError}>
+			<div data-help-message="true" role="alert" class="slds-has-error slds-form-element__help error-text">{errorText}</div>
+		</template>
+	</div>
+</template>

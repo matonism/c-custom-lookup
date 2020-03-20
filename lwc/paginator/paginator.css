@@ -1,0 +1,12 @@
+.body{
+    padding: .75rem 0 .75rem 0;
+}
+
+.nav-info {
+    text-align: center;
+}
+
+.nav-next {
+    text-align: right;
+    height: 2rem;
+}

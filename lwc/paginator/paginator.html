@@ -1,0 +1,23 @@
+<template>
+    <div class="body">
+        <lightning-layout horizontal-align="center" class="slds-m-horizontal_x-small">
+            <lightning-layout-item class="nav-info">
+
+                <template if:false={isFirstPage}>
+                    <lightning-button-icon class="slds-p-right_x-small" icon-name="utility:chevronleft" onclick={handlePrevious}>
+                    </lightning-button-icon>
+                    <lightning-button label="First" title="First Page" onclick={handleFirstPage} class="slds-m-right_x-small"></lightning-button>
+                </template>
+
+                {totalItemCount} items • page {currentPageNumber} of {totalPages}
+
+                <template if:false={isLastPage}>
+                    <lightning-button label="Last" title="Last Page" onclick={handleLastPage} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button-icon class="slds-p-left_x-small" icon-name="utility:chevronright" onclick={handleNext}>
+                    </lightning-button-icon>
+                </template>
+                
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

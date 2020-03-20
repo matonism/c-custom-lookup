@@ -1,0 +1,11 @@
+<template>
+    <template if:true={isClickable}>
+        <a onclick={handleClickableCellClick}>
+            {value}
+        </a>
+    </template>
+
+    <template if:false={isClickable}>
+        {value}
+    </template>
+</template>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="customLookup">
+    <apiVersion>45.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="objectLabel" type="String" required="true" default="Account" label="Object Label" description="The label for the object to search for"/>
+            <property name="objectName" type="String" required="true" default="Account" label="Object Name" description="The API name for the object to search for"/>
+            <property name="fieldLabel" type="String" label="Field Label" default="Account Name" required="true" description="The label for the field you are trying to set"/>
+            <property name="fieldName" type="String" label="Field Name" default="Account" required="true" description="The API name for the field you are trying to set"/>
+            <property name="icon" type="String" label="Icon" default="standard:account" description="The icon to use for the lookup records (ex. standard:account)"/>
+            <property name="isRequired" type="Boolean" label="Required" description="Specify whether or not the field is required"/>
+            <property name="fieldLevelHelp" type="String" label="Field Level Help" description="Help text for the given field"/>
+            <property name="errorText" type="String" label="Field Level Error" description="The default text for error messages"/>
+            <property name="limitAttribute" type="Integer" label="Number of dropdown records" description="The number of records to display in the lookup dropdown list"/>
+            <property name="pageSize" type="String" label="Number of Records per Page" description="The number of records to display in one page of the lookup modal table"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

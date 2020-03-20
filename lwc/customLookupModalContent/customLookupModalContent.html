@@ -1,0 +1,51 @@
+<template>
+
+    <div class="lookup-input-container">
+        <c-custom-lookup-input 
+            label={label} 
+            object-name={objectName} 
+            object-label={objectLabel} 
+            columns-to-show={columnsToShow} 
+            icon={icon}
+            field-level-help={fieldLevelHelp}
+            search-keyword={searchKeyword}
+            limit-attribute={limitAttribute}
+            oncustomlookupselect={handleSelectedRecord}
+            clear-cache={clearCache}>
+        </c-custom-lookup-input>
+    </div>
+
+
+    <div class="slds-p-top_medium slds-p-bottom_medium">
+        <template if:false={showError}>
+            <c-custom-lookup-modal-data-table 
+                key-field="id" 
+                data={searchResults} 
+                columns={dataTableColumns} 
+                hide-checkbox-column 
+                onrecordidselection={handleSelectedRecordId}
+                onsort={handleSort}
+                sorted-direction={sortDirection}
+                sorted-by={sortBy}>
+            </c-custom-lookup-modal-data-table>
+        </template>
+
+        <template if:true={showError}>
+            {errorMessage}
+        </template>
+    </div>
+
+
+    <c-paginator 
+        page-number={pageNumber}
+        page-size={pageSize}
+        total-item-count={totalItemCount}
+        onprevious={handlePreviousPage}
+        onnext={handleNextPage}
+        onfirst={goToFirstPage}
+        onlast={goToLastPage}>
+    </c-paginator>
+
+
+    
+</template>

@@ -1,0 +1,8 @@
+
+.option:hover{
+    background-color: #edf0f9;
+}
+
+.slds-listbox__item{
+    z-index: 5;
+}
