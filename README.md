@@ -142,10 +142,10 @@ export default class ContactAccountManager extends LightningElement {
 
 | Name | Data Type | Description | Default | Example |
 |---|---|---|---|---|
-| `object-label`* | String | "(required)<br/>The label of the lookup object" | n/a | Contact, Account, Custom Object |
-| `object-name`* | String | "(required)<br/>The API name of the lookup object" | n/a | Contact, Account, Custom_Object__c | 
-| `field-label`* | String | "(required)<br/>The label of the field being set by the lookup input" | n/a | Parent Account, Lookup Relationship | 
-| `field-name`* | String | "(required)<br/>The API name of the field being set by the lookup input" | n/a | Account__c, Lookup_Relationship__c 
+| `object-label`* | String | (required)<br/>The label of the lookup object | n/a | Contact, Account, Custom Object |
+| `object-name`* | String | (required)<br/>The API name of the lookup object | n/a | Contact, Account, Custom_Object__c | 
+| `field-label`* | String | (required)<br/>The label of the field being set by the lookup input | n/a | Parent Account, Lookup Relationship | 
+| `field-name`* | String | (required)<br/>The API name of the field being set by the lookup input | n/a | Account__c, Lookup_Relationship__c 
 | `icon` | String | The name of a standard icon provided by the Salesforce Lightning Design System | n/a | standard:account, custom:custom24 | 
 | `limit-attribute` | Integer | The maximum number of possible lookup options listed in the dropdown for a given search term | 5 | n/a | 
 | `is-required` | Boolean | Specifies whether or not the lookup field should be required.  If it is moved out of focus, it is given error text signifying that it is required | FALSE | n/a | 
@@ -154,7 +154,7 @@ export default class ContactAccountManager extends LightningElement {
 | `field-level-help` | String | Additional help text provided in an (i) icon next to the input field | n/a | This is the Primary Contact on an Account | 
 | `default-record-id` | String | The id of a record that you want to display by default when the component loads.  This allows the parent component to preset the lookup field | n/a | 0011g00000kMdB5AAK | 
 | `selected-record` | Object | A record that you want to display by default when the component loads.  This allows the parent component to preset the lookup field. The record must be formatted as an object with an Id and Name at minimum | n/a | {Id: '0011g00000kMdB5AAK', Name: 'Test Account'} |
-| `columns` | Array | "A array of formatted JSON objects containing the fields you wish to search among, display, select, and sort by when gathering the options to choose your lookup field from.   Any field specified will be queried for, captured in a JSON object, and can be returned to your parent component upon record selection.  Each JSON object is formatted as specified in the columns property section below.<br/><br/>Note: This does not support multiple level lookup fields.  Fields using '__r' syntax will not work" | "[{apiName: ""Id"", label: ""Id"", isSearchable: false, isDisplayable: false, isSortable: false, isClickable: false},<br/>{apiName: ""Name"", label: ""Name"", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: true}]" | "[<br/>{apiName: ""Id"", label: ""Id"", isSearchable: false, isDisplayable: false, isSortable: false, isClickable: false},<br/>{apiName: ""Name"", label: ""Name"", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: true},<br/>{apiName: ""Email"", label: ""Email Address"", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: false},<br/>{apiName: ""Phone"", label: ""Phone"", isSearchable: false, isDisplayable: true, isSortable: false, isClickable: false}<br/>]" |
+| `columns` | Array | A array of formatted JSON objects containing the fields you wish to search among, display, select, and sort by when gathering the options to choose your lookup field from.   Any field specified will be queried for, captured in a JSON object, and can be returned to your parent component upon record selection.  Each JSON object is formatted as specified in the columns property section below.<br/><br/>Note: This does not support multiple level lookup fields.  Fields using '__r' syntax will not work | "[{apiName: "Id", label: "Id", isSearchable: false, isDisplayable: false, isSortable: false, isClickable: false},<br/>{apiName: "Name", label: "Name", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: true}]" | "[<br/>{apiName: "Id", label: "Id", isSearchable: false, isDisplayable: false, isSortable: false, isClickable: false},<br/>{apiName: "Name", label: "Name", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: true},<br/>{apiName: "Email", label: "Email Address", isSearchable: true, isDisplayable: true, isSortable: true, isClickable: false},<br/>{apiName: "Phone", label: "Phone", isSearchable: false, isDisplayable: true, isSortable: false, isClickable: false}<br/>]" |
 | `page-size` | Integer | The number of records to display on one page of the lookup modal table | 5 | n/a | 
 | `search-keyword` | String | A keyword used to search for records that have fields containing it.  This can be used to set a default lookup keyword. (The fields to search are specified in the columns attribute.  If not specified, it will search the Name field) | n/a | n/a | 
 | `clear-cache` | Boolean | Controls the caching of records. Meant to be used in the event of caching issues that prevent the most up to date records from being displayed | FALSE | n/a |
@@ -163,8 +163,8 @@ export default class ContactAccountManager extends LightningElement {
 
 | Name | Data Type | Description | Default |
 |---|---|---|---|
-| `apiName` | String | "(*Required if specifying columns)<br/>The API Name of the field" | n/a |
-| `label` | String | "(*Required if specifying columns)<br/>The label of the field" | n/a |
+| `apiName` | String | (*Required if specifying columns)<br/>The API Name of the field | n/a |
+| `label` | String | (*Required if specifying columns)<br/>The label of the field | n/a |
 | `isSearchable` | Boolean | Determines if you should search this field when querying options based on your search term | TRUE |
 | `isDisplayable` | Boolean | Determines if this field will display in the lookup modal. You can hide fields from the lookup modal but still capture them for use in your parent component | TRUE |
 | `isSortable` | Boolean | Determines if you will be able to sort by this field in the lookup modal table | FALSE |
