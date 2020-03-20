@@ -162,7 +162,7 @@ export default class ContactAccountManager extends LightningElement {
 ### Columns Properties
 
 | Name | Data Type | Description | Default |
-|---|---|---|---|---|
+|---|---|---|---|
 | `apiName` | String | "(*Required if specifying columns)<br/>The API Name of the field" | n/a |
 | `label` | String | "(*Required if specifying columns)<br/>The label of the field" | n/a |
 | `isSearchable` | Boolean | Determines if you should search this field when querying options based on your search term | TRUE |
