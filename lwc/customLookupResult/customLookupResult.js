@@ -5,12 +5,7 @@ export default class CustomLookupResult extends LightningElement {
     @api record;
 
     selectRecord(event){
-        event.preventDefault();
-
-        const selectEvent = new CustomEvent('recordselect', {
-            detail: this.record 
-        });
-
+        const selectEvent = new CustomEvent('customlookupselect', { detail: this.record });
         this.dispatchEvent(selectEvent);
     }
 }

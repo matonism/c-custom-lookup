@@ -71,7 +71,7 @@
 
 				<template if:true={listOfSearchRecords.data}>
 					<template for:each={listOfSearchRecords.data} for:item="record">
-						<c-custom-lookup-result key={record.id} record={record} icon={icon} onrecordselect={handleRecordSelection}>
+						<c-custom-lookup-result key={record.id} record={record} icon={icon} oncustomlookupselect={handleRecordSelection}>
 						</c-custom-lookup-result>
 					</template>
 				</template>

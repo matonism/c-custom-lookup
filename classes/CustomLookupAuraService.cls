@@ -3,7 +3,7 @@ public with sharing class CustomLookupAuraService {
 	@AuraEnabled(cacheable=true)
 	public static SObject getDefaultRecord(String recordId, String objectName){
 		String queryString = 'SELECT Id, Name FROM ' + objectName + ' WHERE Id = \'' + recordId + '\'';
-		System.debug(queryString);
+
 		List<SObject> records = Database.query(queryString);
 		
 		if(records.size() == 1){
@@ -63,7 +63,7 @@ public with sharing class CustomLookupAuraService {
 
 		String orderStatement = buildOrderStatement(fieldToSort, direction);
 		String limitStatement = buildLimitStatement(pageSize);
-		String offsetStatement = ' OFFSET ' + (pageNumber-1) * pageSize;
+		String offsetStatement = buildOffsetStatement(pageNumber, pageSize);
 		
 		String paginationQuery = fullQuery + orderStatement + limitStatement + offsetStatement;
 
@@ -128,12 +128,12 @@ public with sharing class CustomLookupAuraService {
 			if(i == 0){
 				whereStatement += 'WHERE ( ';
 			}
-			//Consider Removing name query because it gives extraneous results
+			//Consider Removing name query based on clients needs because it gives extraneous results
 			//"Mark M" will yeild Mark Hons becasue Mark still has an M (logic: if "Mark" is in "Mark Hons" and if "M" is in "Mark Hons")
 			if(fieldsToCheckAgainstKeyword.get(i) == 'Name') {
 				whereStatement += buildNameQuery(searchKey);
 			} else {
-				whereStatement += fieldsToCheckAgainstKeyword[i] + ' LIKE \'%' + searchKey + '%\' ';
+				whereStatement += fieldsToCheckAgainstKeyword[i] + ' LIKE \'%' + String.escapeSingleQuotes(searchKey) + '%\' ';
 			}
 
 			if(i < fieldsToCheckAgainstKeyword.size() - 1) {
@@ -196,6 +196,17 @@ public with sharing class CustomLookupAuraService {
 		return limitStatement;
 	}
 
+	public static String buildOffsetStatement(Integer pageNumber, Integer limiter){
+		if(pageNumber == null){
+			pageNumber = 1;
+		}
+		if(limiter == null){
+			limiter = 5;
+		}
+		
+		return ' OFFSET ' + (pageNumber-1) * limiter;
+	}
+
 	public with sharing class CustomLookupTableResult{
 		@AuraEnabled
 		public Integer totalItemCount { get; set; }
@@ -212,7 +223,7 @@ public with sharing class CustomLookupAuraService {
 		}	
 	}
 
-	private class ColumnData{
+	public class ColumnData{
 
 		String apiName;
 		String label;

@@ -16,19 +16,17 @@ export default class CustomLookupModalContent extends LightningElement {
     
     //paginator properties
     @api pageSize = 2;
-    @track pageNumber = 1;
-    @track totalItemCount = 0;
-
-    //data table properties
-    @track sortBy = 'CreatedDate';
-    @track sortDirection = 'desc';
-
+    pageNumber = 1;
+    totalItemCount = 0;
 
     @track searchResults = [];
-    @track initComplete = false;
-
     @track selectedRecord;
+    
+    //data table properties
+    sortBy = 'CreatedDate';
+    sortDirection = 'desc';
 
+    initComplete = false;
     __privateSearchKeyword;
 
     @api 
@@ -81,6 +79,12 @@ export default class CustomLookupModalContent extends LightningElement {
         return dataTableColumns;
     }
 
+
+    get totalPages() {
+        return Math.ceil(this.totalItemCount / this.pageSize);
+    }
+
+    //TODO: Decide on wire method formatting
 	@wire(fetchLookupRecordsForModalTable, {
 		objectName: '$objectName',
         columnString: '$columnsString',
@@ -89,20 +93,20 @@ export default class CustomLookupModalContent extends LightningElement {
         direction: '$sortDirection',
         pageNumber: '$pageNumber',
         pageSize: '$pageSize'
-    })
-    handleSearchResults({ error, data }) {
+    }) handleSearchResults({ error, data }) {
         if(data){
             this.searchResults = data.records;
             this.totalItemCount = data.totalItemCount;
             this.initComplete = true;
         }else if(error){
-            this.initComplete = false;
             this.initComplete = true;
         }
     }
-	
+    
+    //TODO: See if refresh apex actually clears cached results
+    //Currently this only runs the method again and if the search term hasn't changed, the results won't differ
 	connectedCallback(){
-		if(!!this.clearCache){
+		if(this.clearCache){
 			refreshApex(this.handleSearchResults);
 		}
     }
@@ -123,18 +127,15 @@ export default class CustomLookupModalContent extends LightningElement {
         this.dispatchEvent(selectEvent);
     }
 
+    handleSearchKeywordSubmission(event){
+        this.searchKeyword = event.detail.searchKeyword;
+    }
+
     handleSort(event){
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.pageNumber = 1;
     }
-    
-    // rowSelectedAccordion(event){
-    //     this.selectedRecord = event.detail.selectedRecord;
-    //     const selectEvent = new CustomEvent('selection', { detail: this.selectedRecord });
-    //     this.dispatchEvent(selectEvent);
-    // }
-
 
     handlePreviousPage() {
         this.pageNumber = this.pageNumber - 1;
@@ -150,9 +151,5 @@ export default class CustomLookupModalContent extends LightningElement {
 
     goToLastPage(){
         this.pageNumber = this.totalPages;
-    }
-
-    get totalPages() {
-        return Math.ceil(this.totalItemCount / this.pageSize);
     }
 }

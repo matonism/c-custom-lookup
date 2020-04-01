@@ -4,9 +4,10 @@
     <isExposed>true</isExposed>
     <targets>
         <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning__RecordPage">
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage">
             <property name="objectLabel" type="String" required="true" default="Account" label="Object Label" description="The label for the object to search for"/>
             <property name="objectName" type="String" required="true" default="Account" label="Object Name" description="The API name for the object to search for"/>
             <property name="fieldLabel" type="String" label="Field Label" default="Account Name" required="true" description="The label for the field you are trying to set"/>

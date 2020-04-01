@@ -1,7 +1,9 @@
+//Note: This is not currently mobile friendly or accessibile
 import { LightningElement, api, wire } from 'lwc';
 import getDefaultRecord from '@salesforce/apex/CustomLookupAuraService.getDefaultRecord';
 
 export default class CustomLookup extends LightningElement {
+
 
 	//Used for lookup input functionality
 	@api objectLabel; //required
@@ -37,52 +39,47 @@ export default class CustomLookup extends LightningElement {
 	//used to toggle clearing cache automatically so wire methods are always up to date
 	@api clearCache = false;
 
+	//TODO: Wire formatting regarding newline
 	@wire(getDefaultRecord, {
 		recordId: '$defaultRecordId',
-		objectName: '$objectName',
-	}) 
-    setSelectedRecordToDefault({error, data}){
-		if(!!data){
+		objectName: '$objectName'
+	}) setSelectedRecordToDefault({error, data}){
+		if(data){
 			this.selectedRecord = data;
-		}else if(!!error){
+		}else if(error){
 			console.log('there was no default record');
 		}
 	}
 
-	handleLookupModalClose(event){
-		event.stopPropagation();
-		let modal = this.template.querySelector('c-popup-modal');
-		if(!!modal){
-			modal.hide();
-		}
-	}
-
 	handleSearchKeywordSubmission(event){
-		event.stopPropagation();
 		this.searchKeyword = event.detail.searchKeyword;
-		let modal = this.template.querySelector('c-popup-modal');
-		if(!!modal){
-			modal.show();
-		}
+		this.handleLookupModalOpen();
 	}
 
-	//This customlookupselect event should be caught by parent components
+	//This customlookupselect event should be caught by within components
 	handleRecordSelection(event){
-		event.stopPropagation();
-		let modal = this.template.querySelector('c-popup-modal');
-		if(!!modal){
-			modal.hide();
-		}
+		this.handleLookupModalClose();
 		this.selectedRecord = event.detail;
 		let selectedEvent = new CustomEvent('customlookupselect', {
-			bubbles: true,
-			cancelable: true,
-			composed: true,
 			detail : {
 				record: this.selectedRecord,
 				fieldName: this.fieldName
 			}
 		});
 		this.dispatchEvent(selectedEvent);
+	}
+
+	handleLookupModalClose(){
+		let modal = this.template.querySelector('c-popup-modal');
+		if(modal){
+			modal.hide();
+		}
+	}
+
+	handleLookupModalOpen(){
+		let modal = this.template.querySelector('c-popup-modal');
+		if(modal){
+			modal.show();
+		}
 	}
 }

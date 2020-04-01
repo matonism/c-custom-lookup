@@ -30,7 +30,6 @@ export default class Modal extends LightningElement {
         this.hasHeaderString = value !== '';
     }
 
-
     @api show() {
         this.showModal = true;
     }

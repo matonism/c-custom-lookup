@@ -1,5 +1,5 @@
 <template>
-	<div id="searchRes" class="slds-form-element slds-lookup" data-select="single" onsearchkeywordsubmit={handleSearchKeywordSubmission} onlookupmodalclose={handleLookupModalClose}>
+	<div id="searchRes" class="slds-form-element slds-lookup" data-select="single">
 		
 		<c-custom-lookup-input 
 			object-name={objectName} 
@@ -13,7 +13,8 @@
 			search-keyword={searchKeyword}
 			is-required={isRequired}
 			limit-attribute={limitAttribute}
-			clear-cache={clearCache}>
+			clear-cache={clearCache}
+			onsearchkeywordsubmit={handleSearchKeywordSubmission} >
 		</c-custom-lookup-input>
 		
 		<c-popup-modal size="large" header={fieldLabel}>

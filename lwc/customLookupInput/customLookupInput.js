@@ -16,15 +16,14 @@ export default class CustomLookupInput extends LightningElement {
 	@api errorText = 'Complete this field.';
 	@api columnsToShow;
 	@api fieldLevelHelp;
-	@track showError = false;
 
 	@api selectedRecord;
-	@track listOfSearchRecords = [];
 	@api searchKeyword = '';
 	@api clearCache;
-	@track isSearchKeywordLongEnough = false;
 
-	@track isResultsContainerVisible = false;
+	@track listOfSearchRecords = [];
+	isSearchKeywordLongEnough = false;
+	isResultsContainerVisible = false;
 	
 	@wire(fetchLookUpRecords, {
 		searchKeyword: '$searchKeyword',
@@ -34,8 +33,10 @@ export default class CustomLookupInput extends LightningElement {
 	})
 	listOfSearchRecords;
 	
+    //TODO: See if refresh apex actually clears cached results
+    //Currently this only runs the method again and if the search term hasn't changed, the results won't differ
 	connectedCallback(){
-		if(!!this.clearCache){
+		if(this.clearCache){
 			refreshApex(fetchLookUpRecords);
 		}
 	}
@@ -89,36 +90,23 @@ export default class CustomLookupInput extends LightningElement {
 	handleRecordSelection(event){
 		this.selectedRecord = event.detail;
 
-		const selectEvent = new CustomEvent('customlookupselect', { 
-			bubbles: true,
-			cancelable: true,
-			composed: true,
+		const selectEvent = new CustomEvent('customlookupselect', {
 			detail: this.selectedRecord 
 		});
 		this.dispatchEvent(selectEvent);
 
 		this.isResultsContainerVisible = false;
-		this.closeModal();
 	}
 
 	handleSearchKeywordSubmit(){
 		this.isResultsContainerVisible = false;
 		let event = new CustomEvent('searchkeywordsubmit', {
-			detail: {searchKeyword: this.searchKeyword},
-            bubbles: true,
-			composed: true
+			detail: {searchKeyword: this.searchKeyword}
 		});
 		this.dispatchEvent(event);
 	}
 
-	closeModal() {
-		let event = new CustomEvent('lookupmodalclose', {
-            bubbles: true,
-			composed: true
-		});
-		this.dispatchEvent(event);
-	}
-
+	//submit search with enter
 	keyCheck(event){
 		if (event.which === 13 && this.isSearchKeywordLongEnough) {
 			this.handleSearchKeywordSubmit();
